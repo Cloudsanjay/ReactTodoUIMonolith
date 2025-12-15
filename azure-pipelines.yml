@@ -1,8 +1,18 @@
 trigger: none 
-pool: Default
 
-steps: 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'Write-Host "Hello World"'
+pool: SAgent
+
+jobs:
+  - job: 
+    displayName: NodeInstall
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSource: 'spec'
+        versionSpec: '16.x'
+  - job: 
+    displayName: Build
+    steps:
+    - task: Npm@1
+      inputs:
+        command: 'install'
