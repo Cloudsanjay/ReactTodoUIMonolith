@@ -20,7 +20,7 @@ jobs:
       inputs:
         command: 'custom'
         workingDir: '$(System.DefaultWorkingDirectory)'
-        customCommand: 'npm run build'
+        customCommand: 'run build'
     - task: PublishBuildArtifacts@1
       displayName: Publish build artifact
       inputs:
