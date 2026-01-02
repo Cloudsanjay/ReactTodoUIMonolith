@@ -13,12 +13,15 @@ stages:
   - stage: lint
     displayName: linting
     jobs: 
-      - job: Javalint
-        displayName: Javalinting
+      - job: lint
+        displayName: linting
         #Biom,Megalinter,Superlinterlinkse dekh lenge
         steps:
-        - task: PowerShell@2
+        # - task: PowerShell@2
+        #   displayName: Biomelint-Java
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: 'biome lint $(System.DefaultWorkingDirectory)/src/'
+        - task: Npm@1
           inputs:
-            targetType: 'inline'
-            script: 'biome lint $(System.DefaultWorkingDirectory)/src/'
-          
+            command: 'install'
