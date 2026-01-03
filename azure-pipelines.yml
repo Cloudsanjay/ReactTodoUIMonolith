@@ -24,29 +24,29 @@ stages:
       - job: lintingcheck
         displayName: Multi-Language Linting Checks
         steps:
+        # - task: PowerShell@2
+        #   continueOnError: true
+        #   displayName: JavaScript Linting (Biome)
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: |
+        #       $biomePath = "$(Agent.ToolsDirectory)\biome.exe"
+
+        #       Invoke-WebRequest `
+        #       -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.8/biome-win32-x64.exe" `
+        #       -OutFile $biomePath
+
+        #        & "$biomePath" lint "$(System.DefaultWorkingDirectory)/src"
+          
         - task: PowerShell@2
           continueOnError: true
-          displayName: JavaScript Linting (Biome)
+          displayName: CSS Linting (Stylelint) 
           inputs:
             targetType: 'inline'
             script: |
-              $biomePath = "$(Agent.ToolsDirectory)\biome.exe"
-
-              Invoke-WebRequest `
-              -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.8/biome-win32-x64.exe" `
-              -OutFile $biomePath
-
-               & "$biomePath" lint "$(System.DefaultWorkingDirectory)/src"
-          
-  #       - task: PowerShell@2
-  #         continueOnError: true
-  #         displayName: CSS Linting (Stylelint) 
-  #         inputs:
-  #           targetType: 'inline'
-  #           script: |
-  #             npm install -g stylelint
-  #             npm install -g stylelint-config-standard        
-  #             stylelint $(System.DefaultWorkingDirectory)/src --config stylelint.config.mjs
+              npm install -g stylelint
+              npm install -g stylelint-config-standard        
+              stylelint $(System.DefaultWorkingDirectory)/src --config stylelint.config.mjs
 
   #       - task: PowerShell@2
   #         continueOnError: true
