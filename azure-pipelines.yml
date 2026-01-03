@@ -2,30 +2,92 @@ trigger: none
 
 pool: SAgent
 
-jobs:
-  - job: 
-    displayName: NodeInstall
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSource: 'spec'
-        versionSpec: '16.x'
-    - task: Npm@1
-      displayName: npmInstall
-      inputs:
-        command: 'install'
-        workingDir: '$(System.DefaultWorkingDirectory)'
-    - task: Npm@1
-      displayName: npmRunBuild
-      inputs:
-        command: 'custom'
-        workingDir: '$(System.DefaultWorkingDirectory)'
-        customCommand: 'run build'
-    - task: PublishBuildArtifacts@1
-      displayName: Publish build artifact
-      inputs:
-        # PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        PathtoPublish: 'build'
-        ArtifactName: 'artifactv1'
-        publishLocation: 'Container'
-    
+stages:
+  - stage: SoftwareCompositionAnalysis
+    displayName: Software Composition Analysis (Dependency Security)
+    jobs:
+      - job: DependencyVulnerabilityScan
+        displayName: Dependency Vulnerability Scan (Retire.js)
+        steps:
+          - task: PowerShell@2
+            displayName: Run Dependency Security Scan
+            inputs:
+              targetType: 'inline'
+              script: |
+                npm install -g retire
+                npm install
+                retire --exitwith 0
+
+  - stage: CodeQualityChecks
+    displayName: Code Quality & Linting
+    jobs:
+      - job: lintingcheck
+        displayName: Multi-Language Linting Checks
+        steps:
+        - task: PowerShell@2
+          continueOnError: true
+          displayName: JavaScript Linting (Biome)
+          inputs:
+            targetType: 'inline'
+            script: |
+              Invoke-WebRequest -Uri "https://github.com/biomejs/biome/releases/download/%40biomejs%2Fbiome%402.3.8/biome-win32-x64.exe" -OutFile "$(Agent.ToolsDirectory)/biome.exe"
+              $(Agent.ToolsDirectory)/biome.exe lint $(System.DefaultWorkingDirectory)/src/
+          
+        - task: PowerShell@2
+          continueOnError: true
+          displayName: CSS Linting (Stylelint) 
+          inputs:
+            targetType: 'inline'
+            script: |
+              npm install -g stylelint
+              npm install -g stylelint-config-standard        
+              stylelint $(System.DefaultWorkingDirectory)/src --config stylelint.config.mjs
+
+        - task: PowerShell@2
+          continueOnError: true
+          displayName: YAML Linting (yamllint) 
+          inputs:
+            targetType: 'inline'
+            script: |
+              pip install --user yamllint
+              yamllint $(System.DefaultWorkingDirectory)
+
+        - task: PowerShell@2
+          continueOnError: true
+          displayName: Markdown Linting (markdownlint) 
+          inputs:
+            targetType: 'inline'
+            script: |
+              npm install -g markdownlint-cli      
+              markdownlint $(System.DefaultWorkingDirectory)/
+  
+  - stage: BuildAndPackage
+    displayName: Build & Artifact Packaging
+    jobs:
+      - job: ApplicationBuild
+        displayName: Application Build
+        steps:
+        - task: NodeTool@0
+          displayName: Setup Node.js Environment
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '16.x'
+        - task: Npm@1
+          displayName: Install Dependencies
+          inputs:
+            command: 'install'
+            workingDir: '$(System.DefaultWorkingDirectory)'
+        - task: Npm@1
+          displayName: Build Application
+          inputs:
+            command: 'custom'
+            workingDir: '$(System.DefaultWorkingDirectory)'
+            customCommand: 'run build'
+        - task: PublishBuildArtifacts@1
+          displayName: Publish build artifact
+          inputs:
+            # PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            PathtoPublish: 'build'
+            ArtifactName: 'artifactv1'
+            publishLocation: 'Container'
+        
