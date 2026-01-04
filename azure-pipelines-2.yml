@@ -30,7 +30,7 @@ stages:
         steps:
           - task: JavaToolInstaller@1
             inputs:
-              versionSpec: '18'
+              versionSpec: '24'
               jdkArchitectureOption: 'x64'
               jdkSourceOption: 'PreInstalled'
           
@@ -38,7 +38,7 @@ stages:
             displayName: NodeJS Installation
             inputs:
               versionSource: 'spec'
-              versionSpec: '18.x'
+              versionSpec: '24.x'
 
           - task: Npm@1
             displayName: NPM Validate
