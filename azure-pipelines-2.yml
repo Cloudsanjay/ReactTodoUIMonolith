@@ -28,11 +28,11 @@ stages:
     jobs:
       - job: Build
         steps:
-          - task: JavaToolInstaller@1
-            inputs:
-              versionSpec: '24'
-              jdkArchitectureOption: 'x64'
-              jdkSourceOption: 'PreInstalled'
+          # - task: JavaToolInstaller@1
+          #   inputs:
+          #     versionSpec: '24'
+          #     jdkArchitectureOption: 'x64'
+          #     jdkSourceOption: 'PreInstalled'
           
           - task: NodeTool@0
             displayName: NodeJS Installation
