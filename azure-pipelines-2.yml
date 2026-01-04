@@ -1,0 +1,19 @@
+name: My-FrontEnd-Application
+
+trigger:
+ branches:
+   include:
+     - none
+
+pool:
+  name: SAgent
+
+stages:
+  - stage: Scan
+    displayName: Scan Code
+    jobs:
+      - job: Scan
+        steps:
+          - checkout: self # Tocopy the repo into the Agent
+
+          
