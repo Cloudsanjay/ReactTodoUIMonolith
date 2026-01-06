@@ -1,0 +1,92 @@
+name: ToDo-Application
+
+trigger:
+ branches:
+   include:
+     - none
+
+pool:
+  name: Default
+
+stages:
+  - stage: Scan
+    displayName: Scan Code
+    jobs:
+      - job: Scan
+        steps:
+          - checkout: self # Tocopy the repo into the Agent
+
+          - task: Gitleaks@3
+            inputs:
+              scanlocation: '$(Build.SourcesDirectory)'
+              configtype: 'default'
+              reportformat: 'csv'
+              reportname: 'result'
+
+  - stage: Build
+    displayName: Build APP
+    jobs:
+      - job: Build
+        steps:
+          
+          - task: NodeTool@0
+            displayName: NodeJS Installation
+            inputs:
+              versionSource: 'spec'
+              versionSpec: '24.x'
+
+          - task: Npm@1
+            displayName: NPM Validate
+            inputs:
+              command: 'ci' # Clean Installation-delete od ad add new
+              workingDir: '$(System.DefaultWorkingDirectory)'
+
+          - task: Npm@1
+            displayName: Compile Application
+            inputs:
+              command: 'custom'
+              workingDir: '$(System.DefaultWorkingDirectory)'
+              customCommand: 'run build'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: dist
+              # PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'SanjayArtifact_0104'
+              publishLocation: 'Container'
+              
+  - stage: Deploy
+    jobs:
+      - job: 
+        steps:
+          - task: DownloadBuildArtifacts@1
+            displayName: Download Artifact
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'SanjayArtifact_0104'
+              downloadPath: '$(System.ArtifactsDirectory)'
+              
+          - task: CopyFilesOverSSH@0
+            displayName: Copy Artifact to VM
+            inputs:
+              sshEndpoint: 'srvm' #service connection name of vm (ssh)
+              sourceFolder: '$(System.ArtifactsDirectory)'
+              contents: '**'
+              targetFolder: '/home/sanjay/sanjay'
+              readyTimeout: '20000'
+              cleanTargetFolder: true
+
+          - task: SSH@0
+            displayName: Run Shell Commond on VM
+            inputs:
+              sshEndpoint: 'srvm' #service connection name of vm (ssh)
+              runOptions: 'commands'
+              commands: |
+                export DEBIAN_FRONTEND=noninteractive
+                sudo apt-get update -y
+                sudo apt-get install nginx -y
+                sudo systemctl restart nginx
+                sudo systemctl is-enabled nginx || sudo systemctl enable nginx               
+                sudo cp -r /home/sanjay/sanjay/SanjayArtifact_0104/* /var/www/html/
+              readyTimeout: '20000'
