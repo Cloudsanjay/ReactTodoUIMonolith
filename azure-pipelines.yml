@@ -65,9 +65,8 @@ stages:
             displayName: build creation
             inputs:
               command: 'custom'
-              workingDir: '$(System.DefaultWorkingDirectory)/Dev'
+              workingDir: '$(System.DefaultWorkingDirectory)'
               customCommand: 'run build'
-
 
 
 
