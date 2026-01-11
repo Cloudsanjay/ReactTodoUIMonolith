@@ -8,6 +8,13 @@ stages:
   - stage: ScanLint
     displayName: Scaning-Linting
     jobs:
+      - job: Lint
+        displayName: linting
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: 'npx @biomejs/biome init'
       - job: Scan
         displayName: Scanning
         steps:
