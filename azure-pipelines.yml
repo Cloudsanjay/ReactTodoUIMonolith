@@ -11,6 +11,11 @@ stages:
       - job: Lint
         displayName: linting
         steps:
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'spec'
+              versionSpec: '6.x'
+              checkLatest: true
           - task: Bash@3
             inputs:
               targetType: 'inline'
