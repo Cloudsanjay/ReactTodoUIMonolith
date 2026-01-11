@@ -73,6 +73,33 @@ stages:
               targetPath: '$(Pipeline.Workspace)'
               artifact: 'san-artifact'
               publishLocation: 'pipeline'
+
+  - stage: Deploy
+    displayName: DeployeTodo
+    jobs:
+      - job: 
+        steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'san-artifact'
+              downloadPath: '$(System.ArtifactsDirectory)'
+              cleanDestinationFolder: true
+          - task: CopyFilesOverSSH@0
+            inputs:
+              sshEndpoint: 'g12connection'
+              sourceFolder: '$(System.ArtifactsDirectory)/build'
+              contents: '**'
+              targetFolder: '/home/sanjay'
+              readyTimeout: '20000'
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                sudo apt-get update
+                sudo apt-get install nginx -y
+                cp -r /home/sanjay/build/* var/www/html
           
 
 
