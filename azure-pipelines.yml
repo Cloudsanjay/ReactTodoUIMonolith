@@ -16,6 +16,10 @@ stages:
               scanlocation: '$(Build.SourcesDirectory)'
               configtype: 'default'
               reportformat: 'csv'        
+          - task: NodeTool@0
+            inputs:
+              versionSource: 'spec'
+              versionSpec: '17.x'
           - task: Bash@3
             inputs:
               targetType: 'inline'
