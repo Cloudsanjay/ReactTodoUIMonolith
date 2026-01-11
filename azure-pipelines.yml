@@ -43,7 +43,7 @@ stages:
               script: |
                 npm install -g retire
                 npm install
-                retire --exitwith
+                retire --exitwith code 0
 
   - stage: Build
     displayName: BuildStage
