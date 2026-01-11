@@ -14,7 +14,7 @@ stages:
           - task: NodeTool@0
             inputs:
               versionSource: 'spec'
-              versionSpec: '6.x'
+              versionSpec: '17.x'
               checkLatest: true
           - task: Bash@3
             inputs:
