@@ -89,7 +89,7 @@ stages:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'g12connection'
-              sourceFolder: '$(System.ArtifactsDirectory)/build'
+              sourceFolder: '$(System.ArtifactsDirectory)'
               contents: '**'
               targetFolder: '/home/sanjay'
               readyTimeout: '20000'
