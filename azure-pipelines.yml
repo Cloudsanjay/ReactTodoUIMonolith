@@ -88,7 +88,7 @@ stages:
               cleanDestinationFolder: true
           - task: CopyFilesOverSSH@0
             inputs:
-              sshEndpoint: 'g12connection'
+              sshEndpoint: 'sanjay_v1'
               sourceFolder: '$(System.ArtifactsDirectory)'
               contents: '**'
               targetFolder: '/home/sanjay'
