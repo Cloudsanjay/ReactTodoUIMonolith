@@ -14,7 +14,10 @@ stages:
           - task: Bash@3
             inputs:
               targetType: 'inline'
-              script: 'npx @biomejs/biome init'
+              script: |
+                npm install --save-dev --save-exact @biomejs/biome
+                npx @biomejs/biome check --write
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
       - job: Scan
         dependsOn: Lint
         displayName: Scanning
