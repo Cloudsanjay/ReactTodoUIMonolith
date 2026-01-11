@@ -16,6 +16,7 @@ stages:
               targetType: 'inline'
               script: 'npx @biomejs/biome init'
       - job: Scan
+        dependsOn: Lint
         displayName: Scanning
         steps:
           - task: Gitleaks@3
