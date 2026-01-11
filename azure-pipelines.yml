@@ -67,6 +67,13 @@ stages:
               command: 'custom'
               workingDir: '$(System.DefaultWorkingDirectory)'
               customCommand: 'run build'
+          - task: PublishPipelineArtifact@1
+            displayName: PublishArtifact
+            inputs:
+              targetPath: '$(Pipeline.Workspace)'
+              artifact: 'san-artifact'
+              publishLocation: 'pipeline'
+          
 
 
 
