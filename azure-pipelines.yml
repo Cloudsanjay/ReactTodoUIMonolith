@@ -100,7 +100,7 @@ stages:
                 export DEBIAN_FRONTEND=noninteractive
                 sudo apt-get update
                 sudo apt-get install nginx -y
-                cp -r /home/sanjay/app/* /var/www/html
+                sudo cp -r /home/sanjay/app/* /var/www/html/
               readyTimeout: '20000'
           
 
