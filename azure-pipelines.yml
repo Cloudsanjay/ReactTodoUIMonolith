@@ -97,6 +97,7 @@ stages:
               sshEndpoint: 'sanjay_v1'
               runOptions: 'commands'
               commands: |
+                export DEBIAN_FRONTEND=noninteractive
                 sudo apt-get update
                 sudo apt-get install nginx -y
                 cp -r /home/sanjay/app/* /var/www/html
