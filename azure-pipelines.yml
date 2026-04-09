@@ -20,9 +20,10 @@ stages:
             customCommand: 'run build'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
             ArtifactName: 'drop'
             publishLocation: 'Container'
+
   # - stage: Deploye
   #   jobs:
   #     - job: 
