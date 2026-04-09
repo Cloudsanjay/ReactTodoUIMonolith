@@ -1,8 +1,8 @@
 trigger: none
 
-pool: xyz
+pool: B17_AgentPool
 
-CI(build)----CD(Deploye)
+
 stages:
   - stage: Build 
     jobs:
@@ -23,14 +23,14 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'drop'
             publishLocation: 'Container'
-  - stage: Deploye
-    jobs:
-      - job: 
-        steps:
-          - task: DownloadBuildArtifacts@1
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(System.ArtifactsDirectory)'
+  # - stage: Deploye
+  #   jobs:
+  #     - job: 
+  #       steps:
+  #         - task: DownloadBuildArtifacts@1
+  #           inputs:
+  #             buildType: 'current'
+  #             downloadType: 'single'
+  #             artifactName: 'drop'
+  #             downloadPath: '$(System.ArtifactsDirectory)'
           
