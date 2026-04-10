@@ -1,6 +1,6 @@
 trigger: none
 
-pool: B17_AgentPool
+pool: india
 
 
 stages:
@@ -41,7 +41,7 @@ stages:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'vmservice'
-              sourceFolder: '($(System.DefaultWorkingDirectory)/build'
+              sourceFolder: '$(Pipeline.Workspace)/build'
               contents: '**'
               targetFolder: '/home/sanjay'
               readyTimeout: '20000'
