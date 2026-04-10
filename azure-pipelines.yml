@@ -38,4 +38,11 @@ stages:
               buildType: 'current'
               artifactName: 'drop'
               targetPath: '$(Pipeline.Workspace)'
+          - task: CopyFilesOverSSH@0
+            inputs:
+              sshEndpoint: 'vmservice'
+              sourceFolder: '($(System.DefaultWorkingDirectory)/build'
+              contents: '**'
+              targetFolder: '/home/sanjay'
+              readyTimeout: '20000'
           
