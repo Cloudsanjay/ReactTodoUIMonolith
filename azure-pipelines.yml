@@ -1,6 +1,6 @@
 trigger: none
 
-pool: B17_AgentPool
+pool: Mike
 
 
 stages:
@@ -33,21 +33,21 @@ stages:
     jobs:
       - job: 
         steps:
-          # - task: DownloadPipelineArtifact@2
-          #   inputs:
-          #     buildType: 'current'
-          #     artifactName: 'drop'
-          #     targetPath: '$(Pipeline.Workspace)'
           - task: DownloadPipelineArtifact@2
             inputs:
-              buildType: 'specific'
-              project: '25c201eb-c555-463d-b413-50f09e1b0ac4'
-              definition: '32'
-              specificBuildWithTriggering: true
-              buildVersionToDownload: 'specific'
-              pipelineId: '406'
+              buildType: 'current'
               artifactName: 'drop'
               targetPath: '$(Pipeline.Workspace)'
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     buildType: 'specific'
+          #     project: '25c201eb-c555-463d-b413-50f09e1b0ac4'
+          #     definition: '32'
+          #     specificBuildWithTriggering: true
+          #     buildVersionToDownload: 'specific'
+          #     pipelineId: '406'
+          #     artifactName: 'drop'
+          #     targetPath: '$(Pipeline.Workspace)'
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'vmservice'
