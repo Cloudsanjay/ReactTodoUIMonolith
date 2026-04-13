@@ -45,7 +45,7 @@ stages:
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'vmservice'
-              sourceFolder: '$(System.DefaultWorkingDirectory)/build'
+              sourceFolder: '$(System.DefaultWorkingDirectory)/sanjay'
               contents: '**'
               targetFolder: '/home/devopsadmin'
               readyTimeout: '20000'
