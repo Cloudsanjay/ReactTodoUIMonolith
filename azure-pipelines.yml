@@ -57,5 +57,6 @@ stages:
                 sudo apt update -y
                 sudo apt install nginx -y
                 sudo systemctl start nginx
-                cp -r /home/devopsadmin/welcome/* /var/www/html/
+                sudo cp -r /home/devopsadmin/welcome/* /var/www/html/
               readyTimeout: '20000'
+          
