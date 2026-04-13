@@ -1,6 +1,6 @@
 trigger: none
 
-pool: Mike
+pool: B17_AgentPool
 
 
 stages:
