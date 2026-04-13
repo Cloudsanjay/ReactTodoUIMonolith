@@ -25,7 +25,7 @@ stages:
         #     publishLocation: 'Container'
         - task: PublishPipelineArtifact@1
           inputs:
-            targetPath: '$(System.DefaultWorkingDirectory)/Avinash'
+            targetPath: '$(System.DefaultWorkingDirectory)/build'
             artifact: 'drop'
             publishLocation: 'pipeline'
 
