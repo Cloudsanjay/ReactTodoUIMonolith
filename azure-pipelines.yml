@@ -47,7 +47,7 @@ stages:
               sshEndpoint: 'vmservice'
               sourceFolder: '$(System.DefaultWorkingDirectory)/sanjay'
               contents: '**'
-              targetFolder: '/home/devopsadmin/welcome'
+              targetFolder: '/home/sanjay'
               readyTimeout: '20000'
           - task: SSH@0
             inputs:
