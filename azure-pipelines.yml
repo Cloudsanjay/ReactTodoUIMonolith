@@ -41,7 +41,7 @@ stages:
               buildVersionToDownload: 'specific'
               pipelineId: '421'
               artifactName: 'drop'
-              targetPath: 'System.DefaultWorkingDirectory)/sanjay'
+              targetPath: '$(System.DefaultWorkingDirectory)/sanjay'
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'vmservice'
