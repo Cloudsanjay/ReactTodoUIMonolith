@@ -53,6 +53,6 @@ stages:
               sshEndpoint: 'vmservice'
               sourceFolder: '$(Pipeline.Workspace)/build'
               contents: '**'
-              targetFolder: '/home/sanjay'
+              targetFolder: '/home/devopsadmin'
               readyTimeout: '20000'
           
