@@ -1,6 +1,6 @@
 trigger: none
 
-pool: B17_AgentPool
+pool: VMpool
 
 
 stages:
@@ -54,9 +54,9 @@ stages:
               sshEndpoint: 'vmservice'
               runOptions: 'inline'
               inline: |
-                echo "Devops@123456789" | sudo apt update -y
-                echo "Devops@123456789" | sudo apt install nginx -y
-                echo "Devops@123456789" | sudo -S systemctl restart nginx
-                echo "Devops@123456789" | sudo cp -r /home/devopsadmin/welcome/* /var/www/html/
+                sudo apt update -y
+                sudo apt install nginx -y
+                sudo -S systemctl restart nginx
+                sudo cp -r /home/devopsadmin/welcome/* /var/www/html/
               readyTimeout: '20000'
           
