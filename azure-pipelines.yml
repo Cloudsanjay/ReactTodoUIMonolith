@@ -54,8 +54,9 @@ stages:
               sshEndpoint: 'vmservice'
               runOptions: 'inline'
               inline: |
-                sudo apt update -y
-                sudo apt install nginx -y
+                sudo apt-get update -y
+                sudo apt-get upgrade -y
+                sudo apt-get install nginx -y
                 sudo -S systemctl restart nginx
                 sudo cp -r /home/sanjay/* /var/www/html/
               readyTimeout: '20000'
