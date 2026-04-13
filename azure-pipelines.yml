@@ -28,11 +28,20 @@ stages:
     jobs:
       - job: 
         steps:
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     buildType: 'current'
+          #     artifactName: 'drop'
+          #     targetPath: '$(System.DefaultWorkingDirectory)/build'
           - task: DownloadPipelineArtifact@2
             inputs:
-              buildType: 'current'
+              buildType: 'specific'
+              project: '25c201eb-c555-463d-b413-50f09e1b0ac4'
+              definition: '32'
+              buildVersionToDownload: 'specific'
+              pipelineId: '421'
               artifactName: 'drop'
-              targetPath: '$(System.DefaultWorkingDirectory)/build'
+              targetPath: 'System.DefaultWorkingDirectory)/sanjay'
           - task: CopyFilesOverSSH@0
             inputs:
               sshEndpoint: 'vmservice'
